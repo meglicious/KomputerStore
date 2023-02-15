@@ -8,6 +8,8 @@ const balanceElement = document.getElementById("balance");
 const specsElement = document.getElementById("specs");
 const getLoanElement = document.getElementById("getLoan");
 const transferMoneyElement = document.getElementById("transferMoney");
+const image = document.getElementById("image");
+const description = document.getElementById("description");
 
 const payElement = document.getElementById("pay");
 
@@ -25,6 +27,7 @@ const addLaptopsToMenu = (laptops) => {
   laptops.forEach((x) => addLaptopToMenu(x));
   priceElement.innerText = laptops[0].price;
   specsElement.innerText = laptops[0].specs;
+  description.innerText = laptops[0].description;
 };
 
 //function to display items and specs
@@ -33,14 +36,19 @@ const addLaptopToMenu = (laptop) => {
   laptopElement.value = laptop.id;
   laptopElement.appendChild(document.createTextNode(laptop.title));
   specsElement.appendChild(document.createTextNode(laptop.specs));
+  description.appendChild(document.createTextNode(laptop.description));
+
   laptopsElement.appendChild(laptopElement);
 };
-
 
 const handleLaptopMenuChange = (e) => {
   const selectedLaptop = laptops[e.target.selectedIndex];
   priceElement.innerText = selectedLaptop.price;
   specsElement.innerText = selectedLaptop.specs;
+  description.innerText = selectedLaptop.description;
+  image.src =
+    "https://hickory-quilled-actress.glitch.me/computers" +
+    selectedLaptop.image;
 };
 //create a function add items to basket and shows total payment request
 const handleBuyLaptop = () => {
@@ -48,6 +56,7 @@ const handleBuyLaptop = () => {
   const quantity = parseInt(quantityElement.value);
   const laptopItem = document.createElement("li");
   const lineTotal = quantity * selectedLaptop.price;
+
   laptopItem.innerText = `${selectedLaptop.title}    
     ${new Intl.NumberFormat("de-DE", {
       style: "currency",
@@ -185,10 +194,8 @@ const transferToBank = function () {
 transferMoneyElement.addEventListener("click", transferToBank);
 
 //create a function to repay the loan full by pressing a button, any remaining adds to bank account
-const repayLoan = function () {
-  let transferAmountToPayBack = workMoneyBalance;
-
-  loanBalance -= transferAmountToPayBack;
+function repayLoan() {
+  loanBalance -= workMoneyBalance;
   bankBalance += loanBalance;
   workMoneyBalance = 0;
   loanBalance = 0;
@@ -204,5 +211,5 @@ const repayLoan = function () {
     "de-DE",
     { style: "currency", currency: "EUR" }
   ).format(loanBalance)}`;
-};
+}
 repayLoanButton.addEventListener("click", repayLoan);

@@ -9,6 +9,7 @@
 </head>
 <body>
     <h2>Komputer Store App</h2>
+    <div class="container">
     <div class='parent'>
     <div class="laptopsDisplay">
        
@@ -20,9 +21,8 @@
         
     </div>
     <div class="cart">      
+        <img id="image" src="" alt="Photo of item to buy">
         <h4 name="description" id="description"></h4>
-        <img id="image" alt="Items to buy" style="width:100%">
-        
         <span class="price">Price €</span> 
         <span id = "price"></span>
         <input type= "number" name="quantity" id="quantity" min="0" max="10" value="1">
@@ -35,7 +35,7 @@
     
     </div>
     </div>
-    <div class="parent2">
+    <div class='parent'>
    <div class="bank">
     <h4>Your Bank</h4>
     <p id="bankBalance">Your balance is: </p>
@@ -50,10 +50,9 @@
     <button id="transferMoney">Transfer to Bank</button>
     <button id="workMoney">Get paid</button>
     <ul id="work"></ul>
-    
-
-   </div>
 </div>
+</div>
+   </div>
 <script src= store.js></script>
 </body>
 </html>
