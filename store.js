@@ -8,9 +8,7 @@ const balanceElement = document.getElementById("balance");
 const specsElement = document.getElementById("specs");
 const getLoanElement = document.getElementById("getLoan");
 const transferMoneyElement = document.getElementById("transferMoney");
-
 const description = document.getElementById("description");
-
 const payElement = document.getElementById("pay");
 
 let laptops = [];
@@ -23,10 +21,11 @@ fetch("https://hickory-quilled-actress.glitch.me/computers")
   .then((data) => (laptops = data))
   .then((laptops) => addLaptopsToMenu(laptops))
   .then((imageData) => {
-    const image = imageData.image;
-    const laptopImg = document.getElementById("image");
-    laptopImg.src = image;
-    document.body.appendChild(laptopImg);
+    const imageDiv = document.getElementById("cart");
+    const image = document.getElementById("image");
+
+    imageDiv.appendChild(image);
+    document.querySelector("#image").src = `${laptops.image}`;
   });
 
 const addLaptopsToMenu = (laptops) => {
@@ -43,10 +42,8 @@ const addLaptopToMenu = (laptop) => {
   laptopElement.appendChild(document.createTextNode(laptop.title));
   specsElement.appendChild(document.createTextNode(laptop.specs));
   description.appendChild(document.createTextNode(laptop.description));
-
   laptopsElement.appendChild(laptopElement);
 };
-
 
 const handleLaptopMenuChange = (e) => {
   const selectedLaptop = laptops[e.target.selectedIndex];
