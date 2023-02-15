@@ -13,7 +13,11 @@ Javascript
 HTML
 CSS
 To run all you need to do is open index.html with live server (VS code).
-
+## Actions:
+- Buy laptop choosen from display
+- Checkout process
+- Loan request and repayment
+- Salary and bank account
 ## functions:
 
 - To display items and specs

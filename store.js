@@ -8,7 +8,7 @@ const balanceElement = document.getElementById("balance");
 const specsElement = document.getElementById("specs");
 const getLoanElement = document.getElementById("getLoan");
 const transferMoneyElement = document.getElementById("transferMoney");
-const image = document.getElementById("image");
+
 const description = document.getElementById("description");
 
 const payElement = document.getElementById("pay");
@@ -21,7 +21,13 @@ let pay = 0.0;
 fetch("https://hickory-quilled-actress.glitch.me/computers")
   .then((response) => response.json())
   .then((data) => (laptops = data))
-  .then((laptops) => addLaptopsToMenu(laptops));
+  .then((laptops) => addLaptopsToMenu(laptops))
+  .then((imageData) => {
+    const image = imageData.image;
+    const laptopImg = document.getElementById("image");
+    laptopImg.src = image;
+    document.body.appendChild(laptopImg);
+  });
 
 const addLaptopsToMenu = (laptops) => {
   laptops.forEach((x) => addLaptopToMenu(x));
@@ -41,15 +47,15 @@ const addLaptopToMenu = (laptop) => {
   laptopsElement.appendChild(laptopElement);
 };
 
+
 const handleLaptopMenuChange = (e) => {
   const selectedLaptop = laptops[e.target.selectedIndex];
   priceElement.innerText = selectedLaptop.price;
   specsElement.innerText = selectedLaptop.specs;
   description.innerText = selectedLaptop.description;
-  image.src =
-    "https://hickory-quilled-actress.glitch.me/computers" +
-    selectedLaptop.image;
+  image.innerHTML = selectedLaptop.image;
 };
+
 //create a function add items to basket and shows total payment request
 const handleBuyLaptop = () => {
   const selectedLaptop = laptops[laptopsElement.selectedIndex];
@@ -79,13 +85,14 @@ const handlePayItems = () => {
     "Please enter the amount of money you wish to pay: "
   );
   const change = parseFloat(totalPaid) - balance;
-  if (balance < bankBalance) {
+  if (balance <= bankBalance) {
     alert(
       `Total change due: ${new Intl.NumberFormat("de-DE", {
         style: "currency",
         currency: "EUR",
       }).format(change)}`
     );
+    checkChange();
   } else {
     alert(
       `You need extra ${new Intl.NumberFormat("de-DE", {
@@ -93,6 +100,7 @@ const handlePayItems = () => {
         currency: "EUR",
       }).format(change)}, you can get a loan if you don't have any.`
     );
+    checkChange();
   }
 };
 
@@ -175,7 +183,7 @@ const transferToBank = function () {
   if (loanBalance > 0) {
     let transferAmountWithPayBack = workMoneyBalance - workMoneyBalance * 0.1;
     bankBalance += transferAmountWithPayBack;
-    loanBalance -= transferAmountWithPayBack;
+    loanBalance -= workMoneyBalance * 0.1;
     workMoneyBalance = 0;
     bankBalanceElement.innerHTML = `Overview: ${new Intl.NumberFormat("de-DE", {
       style: "currency",
@@ -194,22 +202,55 @@ const transferToBank = function () {
 transferMoneyElement.addEventListener("click", transferToBank);
 
 //create a function to repay the loan full by pressing a button, any remaining adds to bank account
-function repayLoan() {
-  loanBalance -= workMoneyBalance;
-  bankBalance += loanBalance;
-  workMoneyBalance = 0;
-  loanBalance = 0;
+function repayLoan(workMoneyBalance, loanBalance, bankBalance) {
+  // Check if the work money balance is greater than or equal to the loan balance
+  if (workMoneyBalance >= loanBalance) {
+    // Apply the full work money balance towards the loan
+    loanBalance = 0;
+    workMoneyBalance -= loanBalance;
+  } else {
+    // Apply as much of the work money balance as possible towards the loan
+    loanBalance -= workMoneyBalance;
+    workMoneyBalance = 0;
+  }
+
+  // Transfer any remaining work money balance to the bank
+  bankBalance += workMoneyBalance;
+
+  return { loanBalance, bankBalance };
+}
+
+// Add an event listener to the button to handle clicks
+repayButton.addEventListener("click", function () {
+  // Call the repayLoan function to update the loan balance and bank balance
+  const { newLoanBalance, newBankBalance } = repayLoan(
+    workMoneyBalance,
+    loanBalance,
+    bankBalance
+  );
+
+  // Display the updated loan and bank balances on the page
   bankBalanceElement.innerHTML = `Overview: ${new Intl.NumberFormat("de-DE", {
     style: "currency",
     currency: "EUR",
   }).format(bankBalance)}`;
-  payElement.innerHTML = `Pay: ${new Intl.NumberFormat("de-DE", {
-    style: "currency",
-    currency: "EUR",
-  }).format(workMoneyBalance)}`;
   remainingLoanElement.innerHTML = `Remaining loan: ${new Intl.NumberFormat(
     "de-DE",
     { style: "currency", currency: "EUR" }
   ).format(loanBalance)}`;
-}
+
+  // Set the work money balance to 0 and update the display
+  workMoneyBalance = 0;
+  remainingLoanElement.innerHTML = `Remaining loan: ${new Intl.NumberFormat(
+    "de-DE",
+    { style: "currency", currency: "EUR" }
+  ).format(loanBalance)}`;
+});
 repayLoanButton.addEventListener("click", repayLoan);
+
+function checkChange() {
+  if (change === 0) {
+    alert("Congratulations! You just bought a laptop!");
+  }
+}
+checkChange();
