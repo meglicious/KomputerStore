@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Komputer_Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Komputer Store App</h2>
+    <div class='parent'>
+    <div class="laptopsDisplay">
+       
+        <h4>Laptops</h4>
+        <p>Please select your model</p>
+        <select name = "model" id="laptopModel">
+        </select> 
+        <p name="specs" id="specs"></p>
+        
+    </div>
+    <div class="cart">      
+        <h4 name="description" id="description"></h4>
+        <img id="image" alt="Items to buy" style="width:100%">
+        
+        <span class="price">Price €</span> 
+        <span id = "price"></span>
+        <input type= "number" name="quantity" id="quantity" min="0" max="10" value="1">
+        <button id="add">Add to cart</button>
+
+        <p id="addToList">Your selected list:</p>
+        
+        <p id="balance">Total amount:</p>
+        <button id="buyButton">BUY NOW</button>
+    
+    </div>
+    </div>
+    <div class="parent2">
+   <div class="bank">
+    <h4>Your Bank</h4>
+    <p id="bankBalance">Your balance is: </p>
+    <p id="remainingLoan">Remaining Loan: </p>
+    <button id="getLoan">Get a loan</button>
+   </div>
+        
+   <div class="work">
+    <h4>Work</h4>
+    
+    <p id="pay">pay:</p>
+    <button id="transferMoney">Transfer to Bank</button>
+    <button id="workMoney">Get paid</button>
+    <ul id="work"></ul>
+    
+
+   </div>
+</div>
+<script src= store.js></script>
+</body>
+</html>

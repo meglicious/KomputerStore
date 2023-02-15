@@ -1,0 +1,137 @@
+body {
+    background-color: #f5f5f8;
+    min-width: 1024px;
+    text-align: center;
+    font-size: 17px;
+    line-height: 1.47059;
+    font-weight: 400;
+    letter-spacing: -.022em;
+    font-family: SF Pro Text,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+    color: #1d1d1f;
+    font-style: normal;
+}
+
+.parent {
+    display: flex;
+    width: 50%;
+    margin: 15px;
+   
+  }
+  
+  .cart:first-child {
+    display: flex;
+    width: 50%;
+    margin: auto;
+
+  }
+
+.laptopsDisplay
+    {
+        flex: 1;
+        margin: 15px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: auto;
+        text-align: left;
+        font-family: arial;
+      }
+
+.cart {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+  }
+  
+  .price {
+    color: grey;
+    font-size: 22px;
+  }
+  
+  .cart button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  
+  .cart button:hover {
+    opacity: 0.7;
+
+    
+  }
+  .cart button:active {
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);}
+
+   
+    .parent2 {
+        display: flex;
+        width: 50%;
+      }
+      
+      .bank:first-child {
+        margin-right: 20px;
+        
+      }
+
+    .work
+    {
+        flex: 1;
+        margin: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+      }
+
+.bank {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+  }
+  .bank button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  .work button {
+    border: 2px solid white;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  
+  .work button:hover {
+    opacity: 0.7;
+
+    
+  }
+  .work button:active {
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);}
+
+    body {
+        background-color: #f5f5f7;
+        min-width: 1024px;
+    }
