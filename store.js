@@ -126,11 +126,12 @@ const handleGetALoan = () => {
   }
   if (loanBalance > 0) {
     alert(`You have already a loan, you need to repay first`);
-  } else if (
-    loanAmount !== null ||
-    bankBalance < loanAmount * 2 ||
-    loanBalance < 0
-  ) {
+  }
+  if (loanAmount > bankBalance * 2) {
+    alert(
+      `You need more money in your bank account. Minimum bank account balance is 50% of your requested loan `
+    );
+  } else if (loanAmount !== null && loanAmount <= bankBalance * 2) {
     loanBalance += parseInt(loanAmount);
     remainingLoanElement.innerHTML = `Remaining loan: ${new Intl.NumberFormat(
       "de-DE",
