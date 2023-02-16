@@ -47,7 +47,8 @@ const handleLaptopMenuChange = (e) => {
   priceElement.innerText = selectedLaptop.price;
   specsElement.innerText = selectedLaptop.specs;
   description.innerText = selectedLaptop.description;
-  image.src = 'https://hickory-quilled-actress.glitch.me/' +  selectedLaptop.image;
+  image.src =
+    "https://hickory-quilled-actress.glitch.me/" + selectedLaptop.image;
 };
 
 //create a function add items to basket and shows total payment request
@@ -136,7 +137,7 @@ const handleGetALoan = () => {
       { style: "currency", currency: "EUR" }
     ).format(loanBalance)}`;
     const workDiv = document.getElementById("work");
-    const repayLoanButton = document.createElement("BUTTON");
+    const repayLoanButton = document.createElement("button");
     const t = document.createTextNode("Repay Loan");
     repayLoanButton.appendChild(t);
     workDiv.appendChild(repayLoanButton);
@@ -199,45 +200,112 @@ const transferToBank = function () {
 };
 transferMoneyElement.addEventListener("click", transferToBank);
 
-//create a function to repay the loan full by pressing a button, any remaining adds to bank account
-function repayLoan(workMoneyBalance, loanBalance, bankBalance) {
-  // Check if the work money balance is greater than or equal to the loan balance
-  if (workMoneyBalance >= loanBalance) {
-    // Apply the full work money balance towards the loan
-    loanBalance = 0;
-    workMoneyBalance -= loanBalance;
-  } else {
-    // Apply as much of the work money balance as possible towards the loan
-    loanBalance -= workMoneyBalance;
+//--********************SOLUTION 1***********************--
+const repayLoan = function () {
+  if (loanBalance > workMoneyBalance) {
+    let payBackLoan = workMoneyBalance;
+    loanBalance -= payBackLoan;
     workMoneyBalance = 0;
+    payElement.innerHTML = `Pay: ${new Intl.NumberFormat("de-DE", {
+      style: "currency",
+      currency: "EUR",
+    }).format(workMoneyBalance)}`;
+    remainingLoanElement.innerHTML = `Remaining loan: ${new Intl.NumberFormat(
+      "de-DE",
+      { style: "currency", currency: "EUR" }
+    ).format(loanBalance)}`;
   }
-  // Transfer any remaining work money balance to the bank
-  bankBalance += workMoneyBalance;
+  if (loanBalance <= workMoneyBalance) {
+    let payBackFullAmountOfLoan = workMoneyBalance;
+    loanBalance -= payBackFullAmountOfLoan;
+    bankBalance += payBackFullAmountOfLoan - loanBalance;
+    workMoneyBalance = 0;
+    bankBalanceElement.innerHTML = `Overview: ${new Intl.NumberFormat("de-DE", {
+      style: "currency",
+      currency: "EUR",
+    }).format(bankBalance)}`;
+    payElement.innerHTML = `Pay: ${new Intl.NumberFormat("de-DE", {
+      style: "currency",
+      currency: "EUR",
+    }).format(workMoneyBalance)}`;
+    remainingLoanElement.innerHTML = `Remaining loan: ${new Intl.NumberFormat(
+      "de-DE",
+      { style: "currency", currency: "EUR" }
+    ).format(loanBalance)}`;
+  }
+};
 
-  return { loanBalance, bankBalance };
-}
-// Add an event listener to the button to handle clicks
-repayButton.addEventListener("click", function () {
-  // Call the repayLoan function to update the loan balance and bank balance
-  const { newLoanBalance, newBankBalance } = repayLoan(
-    workMoneyBalance,
-    loanBalance,
-    bankBalance
-  );
-  // Display the updated loan and bank balances on the page
-  bankBalanceElement.innerHTML = `Overview: ${new Intl.NumberFormat("de-DE", {
-    style: "currency",
-    currency: "EUR",
-  }).format(bankBalance)}`;
-  remainingLoanElement.innerHTML = `Remaining loan: ${new Intl.NumberFormat(
-    "de-DE",
-    { style: "currency", currency: "EUR" }
-  ).format(loanBalance)}`;
-  // Set the work money balance to 0 and update the display
-  workMoneyBalance = 0;
-  remainingLoanElement.innerHTML = `Remaining loan: ${new Intl.NumberFormat(
-    "de-DE",
-    { style: "currency", currency: "EUR" }
-  ).format(loanBalance)}`;
-});
-repayLoanButton.addEventListener("click", repayLoan);
+//--********************SOLUTION 2***********************--
+// const repayLoan = () => {
+//   if (workMoneyBalance >= loanBalance) {
+//     loanBalance = 0;
+//     workMoneyBalance -= loanBalance;
+//   } else {
+//     loanBalance -= workMoneyBalance;
+//     workMoneyBalance = 0;
+//   }
+//   bankBalance += workMoneyBalance;
+// };
+// repayLoanButton.addEventListener("click", function () {
+//   // Call the repayLoan function to update the loan balance and bank balance
+//   repayLoan;
+//   // Display the updated loan and bank balances on the page
+//   bankBalanceElement.innerHTML = `Overview: ${new Intl.NumberFormat("de-DE", {
+//     style: "currency",
+//     currency: "EUR",
+//   }).format(bankBalance)}`;
+//   remainingLoanElement.innerHTML = `Remaining loan: ${new Intl.NumberFormat(
+//     "de-DE",
+//     { style: "currency", currency: "EUR" }
+//   ).format(loanBalance)}`;
+//   // Set the work money balance to 0 and update the display
+//   workMoneyBalance = 0;
+//   remainingLoanElement.innerHTML = `Remaining loan: ${new Intl.NumberFormat(
+//     "de-DE",
+//     { style: "currency", currency: "EUR" }
+//   ).format(loanBalance)}`;
+// });
+
+//--************************SOlUTION 3*******************--
+// //create a function to repay the loan full by pressing a button, any remaining adds to bank account
+// function repayLoan(workMoneyBalance, loanBalance, bankBalance) {
+//   // Check if the work money balance is greater than or equal to the loan balance
+//   if (workMoneyBalance >= loanBalance) {
+//     // Apply the full work money balance towards the loan
+//     loanBalance = 0;
+//     workMoneyBalance -= loanBalance;
+//   } else {
+//     // Apply as much of the work money balance as possible towards the loan
+//     loanBalance -= workMoneyBalance;
+//     workMoneyBalance = 0;
+//   }
+//   // Transfer any remaining work money balance to the bank
+//   bankBalance += workMoneyBalance;
+
+//   return { loanBalance, bankBalance };
+// }
+// // Add an event listener to the button to handle clicks
+// repayButton.addEventListener("click", function () {
+//   // Call the repayLoan function to update the loan balance and bank balance
+//   const { newLoanBalance, newBankBalance } = repayLoan(
+//     workMoneyBalance,
+//     loanBalance,
+//     bankBalance
+//   );
+//   // Display the updated loan and bank balances on the page
+//   bankBalanceElement.innerHTML = `Overview: ${new Intl.NumberFormat("de-DE", {
+//     style: "currency",
+//     currency: "EUR",
+//   }).format(bankBalance)}`;
+//   remainingLoanElement.innerHTML = `Remaining loan: ${new Intl.NumberFormat(
+//     "de-DE",
+//     { style: "currency", currency: "EUR" }
+//   ).format(loanBalance)}`;
+//   // Set the work money balance to 0 and update the display
+//   workMoneyBalance = 0;
+//   remainingLoanElement.innerHTML = `Remaining loan: ${new Intl.NumberFormat(
+//     "de-DE",
+//     { style: "currency", currency: "EUR" }
+//   ).format(loanBalance)}`;
+// });
+// repayLoanButton.addEventListener("click", repayLoan);
