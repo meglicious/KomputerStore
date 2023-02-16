@@ -308,4 +308,4 @@ const repayLoan = function () {
 //     { style: "currency", currency: "EUR" }
 //   ).format(loanBalance)}`;
 // });
-// repayLoanButton.addEventListener("click", repayLoan);
+repayLoanButton.addEventListener("click", repayLoan);
