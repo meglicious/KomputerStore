@@ -141,6 +141,7 @@ const handleGetALoan = () => {
     const t = document.createTextNode("Repay Loan");
     repayLoanButton.appendChild(t);
     workDiv.appendChild(repayLoanButton);
+    repayLoanButton.addEventListener("click", repayLoan);
   }
 };
 
@@ -202,7 +203,7 @@ transferMoneyElement.addEventListener("click", transferToBank);
 
 //--********************SOLUTION 1***********************--
 const repayLoan = function () {
-  if (loanBalance > workMoneyBalance) {
+  if (loanBalance >= workMoneyBalance) {
     let payBackLoan = workMoneyBalance;
     loanBalance -= payBackLoan;
     workMoneyBalance = 0;
@@ -215,10 +216,11 @@ const repayLoan = function () {
       { style: "currency", currency: "EUR" }
     ).format(loanBalance)}`;
   }
-  if (loanBalance <= workMoneyBalance) {
+  if (loanBalance < workMoneyBalance) {
     let payBackFullAmountOfLoan = workMoneyBalance;
-    loanBalance -= payBackFullAmountOfLoan;
-    bankBalance += payBackFullAmountOfLoan - loanBalance;
+    let restOfLoan = payBackFullAmountOfLoan - loanBalance;
+    loanBalance -= restOfLoan;
+    bankBalance += restOfLoan;
     workMoneyBalance = 0;
     bankBalanceElement.innerHTML = `Overview: ${new Intl.NumberFormat("de-DE", {
       style: "currency",
@@ -308,4 +310,3 @@ const repayLoan = function () {
 //     { style: "currency", currency: "EUR" }
 //   ).format(loanBalance)}`;
 // });
-repayLoanButton.addEventListener("click", repayLoan);
