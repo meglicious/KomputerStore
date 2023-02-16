@@ -21,7 +21,6 @@ let pay = 0.0;
 fetch("https://hickory-quilled-actress.glitch.me/computers")
   .then((response) => response.json())
   .then((data) => (laptops = data))
-  .then((images) => (images = data))
   .then((laptops) => addLaptopsToMenu(laptops));
 
 const addLaptopsToMenu = (laptops) => {
@@ -48,7 +47,7 @@ const handleLaptopMenuChange = (e) => {
   priceElement.innerText = selectedLaptop.price;
   specsElement.innerText = selectedLaptop.specs;
   description.innerText = selectedLaptop.description;
-  image.innerText = selectedLaptop.image;
+  image.src = 'https://hickory-quilled-actress.glitch.me/' +  selectedLaptop.image;
 };
 
 //create a function add items to basket and shows total payment request
