@@ -126,6 +126,7 @@ const handleGetALoan = () => {
   }
   if (loanBalance > 0) {
     alert(`You have already a loan, you need to repay first`);
+    return;
   }
   if (loanAmount > bankBalance * 2) {
     alert(
