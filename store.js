@@ -12,6 +12,7 @@ const description = document.getElementById("description");
 const image = document.getElementById("image");
 const payElement = document.getElementById("pay");
 
+let images = [];
 let laptops = [];
 let work = [];
 let balance = 0.0;
@@ -20,6 +21,7 @@ let pay = 0.0;
 fetch("https://hickory-quilled-actress.glitch.me/computers")
   .then((response) => response.json())
   .then((data) => (laptops = data))
+  .then((images) => (images = data))
   .then((laptops) => addLaptopsToMenu(laptops));
 
 const addLaptopsToMenu = (laptops) => {
